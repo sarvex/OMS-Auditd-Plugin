@@ -18,15 +18,15 @@ def CopyPattern(srcDir, pattern, dstDir):
         srcname = os.path.join(srcDir, name)
         dstname = os.path.join(dstDir, name)
         if os.path.islink(srcname):
-            print("Symbolic link: " + srcname + " -> " + dstname)
+            print(f"Symbolic link: {srcname} -> {dstname}")
             self.copy(srcname, dstname)
         elif os.path.isfile(srcname):
-            print("Regular file:  " + srcname + " -> " + dstname)
+            print(f"Regular file:  {srcname} -> {dstname}")
             self.copy(srcname, dstname)
         elif os.path.isdir(srcname):
-            print("Directory:     " + srcname + " Ignored")
+            print(f"Directory:     {srcname} Ignored")
         else:
-            print("Unknown:       " + srcname + " Ignored")
+            print(f"Unknown:       {srcname} Ignored")
 
 
 ##
@@ -37,7 +37,7 @@ def CopyPattern(srcDir, pattern, dstDir):
 def Copy(srcPath, dstPath):
     retval = os.system("cp -p \"" + srcPath + "\" \"" + dstPath + "\"")
     if retval != 0:
-        print("Unable to copy from %s to %s." % (srcPath, dstPath))
+        print(f"Unable to copy from {srcPath} to {dstPath}.")
         exit(1)
     
 ##
@@ -48,7 +48,7 @@ def Copy(srcPath, dstPath):
 def Move(srcPath, dstPath):
     retval = os.system("mv \"" + srcPath + "\" \"" + dstPath + "\"")
     if retval != 0:
-        print("Unable to move from %s to %s." % (srcPath, dstPath))
+        print(f"Unable to move from {srcPath} to {dstPath}.")
         exit(1)
     
 ##
@@ -59,7 +59,7 @@ def Move(srcPath, dstPath):
 def Link(path, dstPath):
     retval = os.system("ln -s \"" + path + "\" \"" + dstPath + "\"")
     if retval != 0:
-        print("Unable to ln -s %s %s." % (path, dstPath))
+        print(f"Unable to ln -s {path} {dstPath}.")
         exit(1)
     
 ##
@@ -69,7 +69,7 @@ def Link(path, dstPath):
 def Touch(path):
     retval = os.system("touch \"" + path + "\"")
     if retval != 0:
-        print("Unable to touch %s." % path)
+        print(f"Unable to touch {path}.")
         exit(1)
 
 ##
@@ -82,9 +82,9 @@ def Touch(path):
 def ChOwn(path,uid,gid):
     # Must use 'os.system' rather than os.chown because 'root' will be passed
     # (and we use 'sudo' to allow things like uid=root)
-    retval = os.system('chown %s:%s %s' % (uid,gid,path))
+    retval = os.system(f'chown {uid}:{gid} {path}')
     if retval != 0:
-        print("Unable to chown %s." % path)
+        print(f"Unable to chown {path}.")
         exit(1)
 
 ##
@@ -94,9 +94,9 @@ def ChOwn(path,uid,gid):
 #
 def ChMod(path,mode):
     # Muse use 'os.system' rather than os.chmod because we may need 'sudo' ...
-    retval = os.system('chmod %s %s' % (mode, path))
+    retval = os.system(f'chmod {mode} {path}')
     if retval != 0:
-        print("Unable to chmod %s." % path)
+        print(f"Unable to chmod {path}.")
         exit(1)
 
 ##
